@@ -126,6 +126,3 @@ Repo → **Actions** tab:
 - `retrain.yml` pushes straight to `main`. For a team repo you'd want it opening a PR with the new model instead and requiring review before merge (`peter-evans/create-pull-request` is the common action for this) — left out here to keep the workflow readable as a first pass.
 - `rollback.yml` only restores the model files, not the data the old model was trained on — fine for this project since training data isn't versioned per-model, but worth knowing if you extend this.
 
-## License
-
-MIT — see [LICENSE](LICENSE).
