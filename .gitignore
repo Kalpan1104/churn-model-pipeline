@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+.venv/
+venv/
+.env
+data/train_latest.csv
+models/candidate_model.joblib
+models/candidate_metrics.json
+.pytest_cache/
+.DS_Store
+.vscode/
+.idea/
