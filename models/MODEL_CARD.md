@@ -6,13 +6,14 @@ This file is updated automatically by `.github/workflows/retrain.yml` whenever a
 
 | metric | value |
 |---|---|
-| roc_auc | 0.7556 |
-| f1 | 0.4940 |
-| precision | 0.4545 |
-| recall | 0.5409 |
-| accuracy | 0.7473 |
+| roc_auc | 0.7708 |
+| f1 | 0.5443 |
+| precision | 0.4749 |
+| recall | 0.6374 |
+| accuracy | 0.7567 |
 | n_holdout | 1500 |
 
 ## Promotion history
 
 - **2026-10-28 21:13 UTC** — promoted. no production model exists yet
+- **2026-10-28 22:06 UTC** — promoted. roc_auc improved 0.7556 -> 0.7708
