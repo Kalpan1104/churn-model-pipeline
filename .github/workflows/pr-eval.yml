@@ -1,0 +1,37 @@
+name: Evaluate PR Candidate
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - "src/**"
+      - "tests/**"
+      - "requirements.txt"
+
+jobs:
+  evaluate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run tests
+        run: python -m unittest discover -s tests -v
+
+      - name: Train a candidate using this PR's code
+        run: |
+          python -m src.generate_data --out /tmp/pr_train.csv --n 4000 --seed 999001
+          python -m src.train --data /tmp/pr_train.csv --out-model /tmp/pr_candidate.joblib
+          python -m src.evaluate --model /tmp/pr_candidate.joblib --holdout data/holdout_test.csv --out /tmp/pr_candidate_metrics.json
+
+      - name: Post candidate-vs-production summary
+        run: python -m src.pr_summary --candidate /tmp/pr_candidate_metrics.json >> "$GITHUB_STEP_SUMMARY"
