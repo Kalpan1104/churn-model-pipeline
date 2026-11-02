@@ -20,7 +20,16 @@ def load_metrics(path):
     if not Path(path).exists():
         return None
     with open(path) as f:
-        return json.load(f)
+        content = f.read()
+    try:
+        return json.loads(content)
+    except json.JSONDecodeError as exc:
+        if any(marker in content for marker in ("<<<<<<<", "=======", ">>>>>>>")):
+            raise ValueError(
+                f"{path} contains unresolved git merge conflict markers; "
+                "resolve the conflict and commit a clean JSON file."
+            ) from exc
+        raise ValueError(f"{path} is not valid JSON: {exc}") from exc
 
 
 def should_promote(candidate_metrics, production_metrics):
