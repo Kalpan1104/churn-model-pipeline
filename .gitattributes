@@ -1,0 +1,6 @@
+# Machine-written model files: never merge them line by line.
+# If two branches both change one, git keeps your side and reports a conflict
+# instead of writing <<<<<<< markers into the file (which breaks json.load).
+models/*.json binary
+models/*.joblib binary
+models/MODEL_CARD.md binary
